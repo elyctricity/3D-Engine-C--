@@ -34,11 +34,32 @@ void Camera::control() {
         position = vec_sub(position, (vec_mul_scalar(up, moving_speed)));
     }
 
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
+        camera_yaw(-rotation_speed);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
+        camera_yaw(rotation_speed);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
+        camera_pitch(-rotation_speed);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
+        camera_pitch(rotation_speed);
+    }
 }
 
 void Camera::camera_yaw(double angle) {
     std::vector<std::vector<double>> rotate = mat_rotate_y(angle);
-    forward = mat_mul(forward, rotate);
+    forward = mat_mul(rotate, forward);
+    right = mat_mul(rotate, right);
+    up = mat_mul(rotate, up);
+}
+
+void Camera::camera_pitch(double angle) {
+    std::vector<std::vector<double>> rotate = mat_rotate_x(angle);
+    forward = mat_mul(rotate, forward);
+    right = mat_mul(rotate, right);
+    up = mat_mul(rotate, up);
 }
 
 std::vector<std::vector<double>> Camera::translate_matrix() {

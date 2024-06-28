@@ -14,12 +14,12 @@ Cube::Cube(double w_height, double w_width) {
 
 void Cube::screen_projection(Camera* camera, Projection* projection, sf::RenderWindow& wind) {
     for (int i = 0; i < vertices.size(); i++) {
-        vertices[i] = mat_mul(vertices[i], camera->camera_matrix());  // The [i] is grab a vertex, which is std::vector<std::vector<double>>
-        vertices[i] = mat_mul(vertices[i], projection->projection_matrix);
+        vertices[i] = mat_mul(camera->camera_matrix(), vertices[i]);  // The [i] is grab a vertex, which is std::vector<std::vector<double>>
+        vertices[i] = mat_mul(projection->projection_matrix, vertices[i]);
         for (int j = 0; j < vertices[i].size(); j++){
             vertices[i][j][0] = vertices[i][j][0]/vertices[i][2][0];  // Go through each vertices, rows, then grab first column
         }                                                             // resulting in the x, y, z, w, components being divided by w
-        modified_vertices[i] = mat_mul(vertices[i], projection->to_screen_matrix);
+        modified_vertices[i] = mat_mul(projection->to_screen_matrix, vertices[i]);
         modified_vertices[i] = vec4_to_vec2(modified_vertices[i]);
     }
 
@@ -37,30 +37,30 @@ void Cube::screen_projection(Camera* camera, Projection* projection, sf::RenderW
 
 void Cube::translate(double tx, double ty, double tz) {
     for (std::vector<std::vector<double>>& vertex : vertices) {
-        vertex = mat_mul(vertex, mat_translate(tx, ty, tz));
+        vertex = mat_mul(mat_translate(tx, ty, tz), vertex);
     }
 }
 
 void Cube::scale(double scale_to) {
     for (std::vector<std::vector<double>>& vertex : vertices) {
-        vertex = mat_mul(vertex, mat_scale(scale_to));
+        vertex = mat_mul(mat_scale(scale_to), vertex);
     }
 }
 
 void Cube::rotate_x(double angle) {
     for (std::vector<std::vector<double>>& vertex : vertices) {
-        vertex = mat_mul(vertex, mat_rotate_x(angle));
+        vertex = mat_mul(mat_rotate_x(angle), vertex);
     }
 }
 
 void Cube::rotate_y(double angle) {
     for (std::vector<std::vector<double>>& vertex : vertices) {
-        vertex = mat_mul(vertex, mat_rotate_y(angle));
+        vertex = mat_mul(mat_rotate_y(angle), vertex);
     }
 }
 
 void Cube::rotate_z(double angle) {
     for (std::vector<std::vector<double>>& vertex : vertices) {
-        vertex = mat_mul(vertex, mat_rotate_z(angle));
+        vertex = mat_mul(mat_rotate_z(angle), vertex);
     }
 }

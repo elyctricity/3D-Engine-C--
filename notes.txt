@@ -1,0 +1,15 @@
+Update Log (26/06/2024):
+* Deleted old work and followed Coder Space's python tutorial on 3D rendering
+* ERROR: Cube not shown
+Update Log (27/06/2024):
+* Fixed w_width and w_height variable arguments being 0, by turning their types and WIDTH and HEIGHT's types to double.
+* Fixed to screen matrix by changing two variable assignment in one line to two separate variable assignments.
+* EXAMPLE: int x, y = 0, 1; ---> int x = 0; int y = 1;
+* ERROR: Cube turns into line? Outside of screen WIDTH and HEIGHT, so viewport was changed.
+
+I may have found the reason why the cube aint showing up.
+I think its because the matrix multiplication function uses
+multidimensional arrays but all the vertices and camera vectors
+are {x, y, z, w} instead of {{x}, {y}, {z}, {w}}
+So a major overhaul is needed in those parts
+AND THE ROTATION CONTROLS

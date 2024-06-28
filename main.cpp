@@ -10,7 +10,7 @@ int main()
     const double WIDTH = 1280;
     const double HEIGHT = 720;
     sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "3D Engine in C++");
-    sf::View view(sf::Vector2f(1280.f, 720.f+100.f), sf::Vector2f(WIDTH+100, HEIGHT+100));
+    sf::View view(sf::Vector2f(0.f, 0.f), sf::Vector2f(WIDTH, HEIGHT));
     window.setFramerateLimit(60);
     sf::Clock Clock;
 
@@ -20,8 +20,6 @@ int main()
     Cube* cube = new Cube(HEIGHT, WIDTH);
     cube->translate(0.2, 0.4, 0.2);
     cube->rotate_y(M_PI / 6);
-
-    double angle = 0;
 
     while (window.isOpen())
     {
@@ -40,8 +38,6 @@ int main()
         window.setView(view);
 
         window.clear();
-
-        angle += 0.01;
 
         cube->screen_projection(camera, projection, window);
         window.display();
