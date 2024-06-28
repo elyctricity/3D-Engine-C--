@@ -20,25 +20,20 @@ int main()
     Cube* cube = new Cube(HEIGHT, WIDTH);
     cube->translate(0.2, 0.4, 0.2);
     cube->rotate_y(M_PI / 6);
+    window.setView(view);
 
     while (window.isOpen())
     {
         sf::Time elapsed = Clock.getElapsedTime();
 
         sf::Event event;
-        while (window.pollEvent(event))
-        {
+        while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) window.close();
         }
-
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) window.close();
-
         camera->control();
 
-        window.setView(view);
-
         window.clear();
-
         cube->screen_projection(camera, projection, window);
         window.display();
     }
