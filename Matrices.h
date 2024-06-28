@@ -8,10 +8,10 @@ inline std::vector<std::vector<double>> vec4_to_vec2(std::vector<std::vector<dou
 
 inline std::vector<std::vector<double>> mat_translate(double tx, double ty, double tz) {
     std::vector<std::vector<double>> translation_matrix = {
-        {1,  0,  0,  0},
-        {0,  1,  0,  0},
-        {0,  0,  1,  0},
-        {tx, ty, tz, 1}
+        {1, 0, 0, tx},
+        {0, 1, 0, ty},
+        {0, 0, 1, tz},
+        {0, 0, 0, 1}
     };
     return translation_matrix;
 }
