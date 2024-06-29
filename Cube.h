@@ -9,12 +9,10 @@ class Cube {
 private:
     std::vector<vec3> vertices;
     std::vector<vec2> modified_vertices;
-    double wind_height;
-    double wind_width;
     sf::VertexArray* p_cube_vertbuff;
 
 public:
-    Cube(double w_height, double w_width);
+    Cube();
     void screen_projection(Camera* camera, Projection* projection, sf::RenderWindow& wind);
     void translate(double tx, double ty, double tz);
     void scale(double scale_to);

@@ -1,12 +1,10 @@
 #include "Cube.h"
 
-Cube::Cube(double w_height, double w_width) {
+Cube::Cube() {
     vertices = {{0, 0, 0}, {0, 1, 0}, {1, 1, 0}, {1, 0, 0},
                 {0, 0, 1}, {0, 1, 1}, {1, 1, 1}, {1, 0, 1}};
     modified_vertices = {{0, 0}, {0, 0}, {0, 0}, {0, 0},
                          {0, 0}, {0, 0}, {0, 0}, {0, 0}};
-    wind_height = w_height;
-    wind_width = w_width;
     p_cube_vertbuff = new sf::VertexArray(sf::LineStrip, 8);
 }
 
