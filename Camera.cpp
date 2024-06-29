@@ -66,10 +66,10 @@ std::vector<std::vector<double>> Camera::translate_matrix() {
     double y = position.y;
     double z = position.z;
     std::vector<std::vector<double>> translation_matrix = {
-        {1, 0, 0, 0},
-        {0, 1, 0, 1},
-        {0, 0, 1, 0},
-        {-x, -y, -z, 1}
+        {1, 0, 0, x},
+        {0, 1, 0, y},
+        {0, 0, 1, z},
+        {0, 0, 0, 1}
     };
     return translation_matrix;
 }
@@ -94,5 +94,5 @@ std::vector<std::vector<double>> Camera::rotate_matrix() {
 }
 
 std::vector<std::vector<double>> Camera::camera_matrix() {
-    return mat_mul(translate_matrix(), rotate_matrix());
+    return mat_mul(rotate_matrix(), translate_matrix());
 }

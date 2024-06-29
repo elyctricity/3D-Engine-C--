@@ -63,10 +63,10 @@ inline vec3 vec3_mul_scalar(vec3 a, double s) {
 
 inline std::vector<std::vector<double>> mat_translate(double tx, double ty, double tz) {
     std::vector<std::vector<double>> translation_matrix = {
-        {1, 0, 0, 0},
-        {0, 1, 0, 0},
-        {0, 0, 1, 0},
-        {tx, ty, tz, 1}
+        {1, 0, 0, tx},
+        {0, 1, 0, ty},
+        {0, 0, 1, tz},
+        {0, 0, 0, 1}
     };
     return translation_matrix;
 }

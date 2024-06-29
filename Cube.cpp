@@ -9,16 +9,22 @@ Cube::Cube() {
 }
 
 void Cube::screen_projection(Camera* camera, Projection* projection, sf::RenderWindow& wind) {
+    printf("Cube\n");
     for (int i = 0; i < vertices.size(); i++) {
+        printf("%f, %f, %f\n", vertices[i].x, vertices[i].y, vertices[i].z);
         vertices[i] = vec3_mat_mul(vertices[i], camera->camera_matrix());
+        // printf("%f, %f, %f\n", vertices[i].x, vertices[i].y, vertices[i].z);
         vertices[i] = vec3_mat_mul(vertices[i], projection->projection_matrix);
+        // printf("%f, %f, %f\n", vertices[i].x, vertices[i].y, vertices[i].z);
         vertices[i] = vec3_mat_mul(vertices[i], projection->to_screen_matrix);
+        // printf("%f, %f, %f\n", vertices[i].x, vertices[i].y, vertices[i].z);
         modified_vertices[i] = vec3_to_vec2(vertices[i]);
     }
-
+    
     for (int i = 0; i < modified_vertices.size(); i++) {
+        // printf("%f, %f\n", modified_vertices[i].x, modified_vertices[i].y);
         (*(p_cube_vertbuff))[i].position = sf::Vector2f(modified_vertices[i].x, modified_vertices[i].y);
-        (*(p_cube_vertbuff))[0].color = sf::Color(255, 255, 255);
+        (*(p_cube_vertbuff))[0].color = sf::Color(255, 0, 0);
     }
 
     wind.draw(*p_cube_vertbuff);

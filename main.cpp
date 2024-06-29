@@ -19,8 +19,9 @@ int main()
     Camera* camera = new Camera(init_cam_pos, HEIGHT, WIDTH);
     Projection* projection = new Projection(camera, HEIGHT, WIDTH);
     Cube* cube = new Cube();
-    cube->translate(0.2, 0.4, 0.2);
-    cube->rotate_y(M_PI / 6);
+    cube->scale(100);
+    // cube->translate(0.2, 0.4, 0.2);
+    // cube->rotate_y(M_PI / 6);
 
     while (window.isOpen())
     {
