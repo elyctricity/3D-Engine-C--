@@ -17,7 +17,9 @@ void Cube::screen_projection(Camera* camera, Projection* projection, sf::RenderW
         vertices[i] = mat_mul(camera->camera_matrix(), vertices[i]);  // The [i] is grab a vertex, which is std::vector<std::vector<double>>
         vertices[i] = mat_mul(projection->projection_matrix, vertices[i]);
         for (int j = 0; j < vertices[i].size(); j++){
-            vertices[i][j][0] = vertices[i][j][0]/vertices[i][2][0];  // Go through each vertices, rows, then grab first column
+            if (vertices[i][2][0] != 0) {
+                vertices[i][j][0] = vertices[i][j][0]/vertices[i][2][0];  // Go through each vertices, rows, then grab first column
+            }
         }                                                             // resulting in the x, y, z, w, components being divided by w
         modified_vertices[i] = mat_mul(projection->to_screen_matrix, vertices[i]);
         modified_vertices[i] = vec4_to_vec2(modified_vertices[i]);
