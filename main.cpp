@@ -15,7 +15,7 @@ int main()
     window.setFramerateLimit(60);
     sf::Clock Clock;
 
-    std::vector<std::vector<double>> init_cam_pos = {{0.5}, {1}, {-4}}; 
+    vec3 init_cam_pos; init_cam_pos.x = 0.5; init_cam_pos.y = 1; init_cam_pos.z = -4;
     Camera* camera = new Camera(init_cam_pos, HEIGHT, WIDTH);
     Projection* projection = new Projection(camera, HEIGHT, WIDTH);
     Cube* cube = new Cube(HEIGHT, WIDTH);

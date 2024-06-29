@@ -1,17 +1,72 @@
 #pragma once
 #include <math.h>
 
-inline std::vector<std::vector<double>> vec4_to_vec2(std::vector<std::vector<double>> v) {
-    std::vector<std::vector<double>> new_v = {{v[0][0]}, {v[1][0]}};
-    return v;
+struct vec3 {
+    double x;
+    double y;
+    double z;
+};
+
+struct vec2 {
+    double x;
+    double y;
+};
+
+inline vec3 vec3_mat_mul(vec3 v, std::vector<std::vector<double>> m) {
+    vec3 o;
+    o.x = v.x*m[0][0] + v.y*m[0][1] + v.z*m[0][2] + m[0][3];
+    o.y = v.x*m[1][0] + v.y*m[1][1] + v.z*m[1][2] + m[1][3];
+    o.z = v.x*m[2][0] + v.y*m[2][1] + v.z*m[2][2] + m[2][3];
+    double w = v.x*m[3][0] + v.y*m[3][1] + v.z*m[3][2] + m[3][3];
+
+    if (w != 0) {
+        o.x /= w; o.y /= w; o.z /= w;
+    }
+
+    return o;
+}
+
+inline vec2 vec3_to_vec2(vec3 v) {
+    vec2 o;
+    o.x = v.x;
+    o.y = v.y;
+    
+    return o;
+}
+
+inline vec3 vec3_add(vec3 a, vec3 b) {
+    vec3 o;
+    o.x = a.x+b.x;
+    o.y = a.y+b.y;
+    o.z = a.z+b.z;
+
+    return o;
+}
+
+inline vec3 vec3_sub(vec3 a, vec3 b) {
+    vec3 o;
+    o.x = a.x-b.x;
+    o.y = a.y-b.y;
+    o.z = a.z-b.z;
+
+    return o;
+}
+
+inline vec3 vec3_mul_scalar(vec3 a, double s) {
+    vec3 o;
+    o.x = a.x*s;
+    o.y = a.y*s;
+    o.z = a.z*s;
+
+    return o;
 }
 
 inline std::vector<std::vector<double>> mat_translate(double tx, double ty, double tz) {
     std::vector<std::vector<double>> translation_matrix = {
-        {1, 0, 0, tx},
-        {0, 1, 0, ty},
-        {0, 0, 1, tz},
-        {0, 0, 0, 1}
+        {1, 0, 0, 0},
+        {0, 1, 0, 0},
+        {0, 0, 1, 0},
+        {tx, ty, tz, 1}
     };
     return translation_matrix;
 }
@@ -100,46 +155,4 @@ inline std::vector<std::vector<double>> mat_mul(std::vector<std::vector<double>>
     }
 
     return result_2;
-}
-
-// One-dimensional matrix scalar multiplication
-inline std::vector<std::vector<double>> vec_mul_scalar(std::vector<std::vector<double>> a, double scalar) {
-    double a_size = a.size();
-    std::vector<std::vector<double>> result;
-    double product;
-
-    for (int i = 0; i < a_size; i++) {
-        product = a[i][0] * scalar;
-        result.push_back({product});
-    }
-
-    return result;
-}
-
-// One-dimensional matrix addition (Currently only for horizontal linear)
-inline std::vector<std::vector<double>> vec_add(std::vector<std::vector<double>> a, std::vector<std::vector<double>> b) {
-    double a_size = a.size();
-    std::vector<std::vector<double>> result;
-    double sum;
-
-    for (int i = 0; i < a_size; i++) {
-        sum = a[i][0] + b[i][0];
-        result.push_back({sum});
-    }
-
-    return result;
-}
-
-// One-dimensional matrix subtraction (Currently only for horizontal linear)
-inline std::vector<std::vector<double>> vec_sub(std::vector<std::vector<double>> a, std::vector<std::vector<double>> b) {
-    double a_size = a.size();
-    std::vector<std::vector<double>> result;
-    double sum;
-
-    for (int i = 0; i < a_size; i++) {
-        sum = a[i][0] - b[i][0];
-        result.push_back({sum});
-    }
-
-    return result;
 }

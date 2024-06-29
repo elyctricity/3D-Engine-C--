@@ -5,17 +5,17 @@
 
 class Camera {
 public:
-    std::vector<std::vector<double>> position;
-    std::vector<std::vector<double>> forward;
-    std::vector<std::vector<double>> up;
-    std::vector<std::vector<double>> right;
+    vec3 position;
+    vec3 forward;
+    vec3 up;
+    vec3 right;
     double h_fov;
     double v_fov;
     double near_plane;
     double far_plane;
     double moving_speed;
     double rotation_speed;
-    Camera(std::vector<std::vector<double>> pos, double w_height, double w_width);
+    Camera(vec3 pos, double w_height, double w_width);
     void control();
     void camera_yaw(double angle);
     void camera_pitch(double angle);

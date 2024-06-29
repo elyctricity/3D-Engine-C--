@@ -7,10 +7,8 @@
 
 class Cube {
 private:
-    std::vector<std::vector<std::vector<double>>> vertices;
-    std::vector<std::vector<std::vector<double>>> modified_vertices;
-    std::vector<std::vector<double>> faces;
-    std::vector<std::vector<double>> polygon;
+    std::vector<vec3> vertices;
+    std::vector<vec2> modified_vertices;
     double wind_height;
     double wind_width;
     sf::VertexArray* p_cube_vertbuff;

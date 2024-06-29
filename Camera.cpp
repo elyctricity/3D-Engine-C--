@@ -1,11 +1,10 @@
 #include "Camera.h"
 
-Camera::Camera(std::vector<std::vector<double>> pos, double w_height, double w_width) {
+Camera::Camera(vec3 pos, double w_height, double w_width) {
     position = pos;
-    position.push_back({1.0});
-    forward = {{0}, {0}, {1}, {1}};                   // Forward unit vector of camera. Facing towards positive z.
-    up = {{0}, {1}, {0}, {1}};                        // Up unit vector of camera. Facing towards positive y.
-    right = {{1}, {0}, {0}, {1}};                     // Right unit vector of camera. Facing towards positive x.
+    forward.x = 0; forward.y = 0; forward.z = 1; // Forward unit vector of camera. Facing towards positive z.
+    up.x = 0; up.y = 1; up.z = 0;                    // Up unit vector of camera. Facing towards positive y.
+    right.x = 1; right.y = 0; right.z = 0;         // Right unit vector of camera. Facing towards positive x.
     h_fov = M_PI / 3;
     v_fov = h_fov * (w_height / w_width);
     near_plane = 0.1;
@@ -16,22 +15,22 @@ Camera::Camera(std::vector<std::vector<double>> pos, double w_height, double w_w
 
 void Camera::control() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
-        position = vec_sub(position, (vec_mul_scalar(right, moving_speed)));
+        position = vec3_sub(position, (vec3_mul_scalar(right, moving_speed)));
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
-        position = vec_add(position, (vec_mul_scalar(right, moving_speed)));
+        position = vec3_add(position, (vec3_mul_scalar(right, moving_speed)));
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
-        position = vec_add(position, (vec_mul_scalar(forward, moving_speed)));
+        position = vec3_add(position, (vec3_mul_scalar(forward, moving_speed)));
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
-        position = vec_sub(position, (vec_mul_scalar(forward, moving_speed)));
+        position = vec3_sub(position, (vec3_mul_scalar(forward, moving_speed)));
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)) {
-        position = vec_add(position, (vec_mul_scalar(up, moving_speed)));
+        position = vec3_add(position, (vec3_mul_scalar(up, moving_speed)));
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E)) {
-        position = vec_sub(position, (vec_mul_scalar(up, moving_speed)));
+        position = vec3_sub(position, (vec3_mul_scalar(up, moving_speed)));
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
@@ -50,23 +49,22 @@ void Camera::control() {
 
 void Camera::camera_yaw(double angle) {
     std::vector<std::vector<double>> rotate = mat_rotate_y(angle);
-    forward = mat_mul(rotate, forward);
-    right = mat_mul(rotate, right);
-    up = mat_mul(rotate, up);
+    forward = vec3_mat_mul(forward, rotate);
+    right = vec3_mat_mul(right, rotate);
+    up = vec3_mat_mul(up, rotate);
 }
 
 void Camera::camera_pitch(double angle) {
     std::vector<std::vector<double>> rotate = mat_rotate_x(angle);
-    forward = mat_mul(rotate, forward);
-    right = mat_mul(rotate, right);
-    up = mat_mul(rotate, up);
+    forward = vec3_mat_mul(forward, rotate);
+    right = vec3_mat_mul(right, rotate);
+    up = vec3_mat_mul(up, rotate);
 }
 
 std::vector<std::vector<double>> Camera::translate_matrix() {
-    double x = position[0][0];
-    double y = position[1][0];
-    double z = position[2][0];
-    double w = position[3][0];
+    double x = position.x;
+    double y = position.y;
+    double z = position.z;
     std::vector<std::vector<double>> translation_matrix = {
         {1, 0, 0, 0},
         {0, 1, 0, 1},
@@ -77,15 +75,15 @@ std::vector<std::vector<double>> Camera::translate_matrix() {
 }
 
 std::vector<std::vector<double>> Camera::rotate_matrix() {
-    double rx = right[0][0];
-    double ry = right[1][0];
-    double rz = right[2][0];
-    double fx = forward[0][0];
-    double fy = forward[1][0];
-    double fz = forward[2][0];
-    double ux = up[0][0];
-    double uy = up[1][0];
-    double uz = up[2][0];
+    double rx = right.x;
+    double ry = right.y;
+    double rz = right.z;
+    double fx = forward.x;
+    double fy = forward.y;
+    double fz = forward.z;
+    double ux = up.x;
+    double uy = up.y;
+    double uz = up.z;
     std::vector<std::vector<double>> rotation_matrix = {
         {rx, ux, fx, 0},
         {ry, uy, fy, 0},
