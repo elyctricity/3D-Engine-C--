@@ -12,7 +12,7 @@ Cube::Cube(double w_height, double w_width) {
 
 void Cube::screen_projection(Camera* camera, Projection* projection, sf::RenderWindow& wind) {
     for (int i = 0; i < vertices.size(); i++) {
-        vertices[i] = vec3_mat_mul(vertices[i], camera->camera_matrix());  // The [i] is grab a vertex, which is std::vector<std::vector<double>>
+        vertices[i] = vec3_mat_mul(vertices[i], camera->camera_matrix());
         vertices[i] = vec3_mat_mul(vertices[i], projection->projection_matrix);
         vertices[i] = vec3_mat_mul(vertices[i], projection->to_screen_matrix);
         modified_vertices[i] = vec3_to_vec2(vertices[i]);
