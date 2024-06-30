@@ -1,9 +1,9 @@
 #include <SFML/Graphics.hpp>
 #include <math.h>
 #include <iostream>
-#include "Cube.h"
-#include "Camera.h"
-#include "Projection.h"
+#include "Cube.hpp"
+#include "Camera.hpp"
+#include "Projection.hpp"
 
 int main()
 {

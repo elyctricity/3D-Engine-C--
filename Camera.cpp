@@ -1,4 +1,4 @@
-#include "Camera.h"
+#include "Camera.hpp"
 
 Camera::Camera(vec3 pos, double w_height, double w_width) {
     position = pos;
@@ -7,6 +7,7 @@ Camera::Camera(vec3 pos, double w_height, double w_width) {
     right.x = 1; right.y = 0; right.z = 0;         // Right unit vector of camera. Facing towards positive x.
     h_fov = M_PI / 3;
     v_fov = h_fov * (w_height / w_width);
+    fov = M_PI / 4;
     near_plane = 0.1;
     far_plane = 100;
     moving_speed = 0.02;
