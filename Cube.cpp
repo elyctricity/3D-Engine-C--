@@ -3,22 +3,27 @@
 Cube::Cube() {
     vertices = {{0, 0, 0}, {0, 1, 0}, {1, 1, 0}, {1, 0, 0},
                 {0, 0, 1}, {0, 1, 1}, {1, 1, 1}, {1, 0, 1}};
+    projection_vertices = vertices;
     modified_vertices = {{0, 0}, {0, 0}, {0, 0}, {0, 0},
                          {0, 0}, {0, 0}, {0, 0}, {0, 0}};
     p_cube_vertbuff = new sf::VertexArray(sf::LineStrip, 8);
 }
 
+void Cube::vertices_to_projection() {
+    vertices = projection_vertices;
+}
+
 void Cube::screen_projection(Camera* camera, Projection* projection, sf::RenderWindow& wind) {
     printf("Cube\n");
-    for (int i = 0; i < vertices.size(); i++) {
-        printf("%f, %f, %f\n", vertices[i].x, vertices[i].y, vertices[i].z);
-        vertices[i] = vec3_mat_mul(vertices[i], camera->camera_matrix());
+    for (int i = 0; i < projection_vertices.size(); i++) {
+        printf("%f, %f, %f\n", projection_vertices[i].x, projection_vertices[i].y, projection_vertices[i].z);
+        projection_vertices[i] = vec3_mat_mul(projection_vertices[i], camera->camera_matrix());
         // printf("%f, %f, %f\n", vertices[i].x, vertices[i].y, vertices[i].z);
-        vertices[i] = vec3_mat_mul(vertices[i], projection->projection_matrix);
+        projection_vertices[i] = vec3_mat_mul(projection_vertices[i], projection->projection_matrix);
         // printf("%f, %f, %f\n", vertices[i].x, vertices[i].y, vertices[i].z);
-        vertices[i] = vec3_mat_mul(vertices[i], projection->to_screen_matrix);
+        projection_vertices[i] = vec3_mat_mul(projection_vertices[i], projection->to_screen_matrix);
         // printf("%f, %f, %f\n", vertices[i].x, vertices[i].y, vertices[i].z);
-        modified_vertices[i] = vec3_to_vec2(vertices[i]);
+        modified_vertices[i] = vec3_to_vec2(projection_vertices[i]);
     }
     
     for (int i = 0; i < modified_vertices.size(); i++) {

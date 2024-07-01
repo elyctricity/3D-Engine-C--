@@ -36,6 +36,7 @@ int main()
 
         window.clear();
         cube->screen_projection(camera, projection, window);
+        cube->vertices_to_projection();
         window.display();
     }
 
