@@ -21,6 +21,7 @@ public:
     void camera_yaw(double angle);
     void camera_pitch(double angle);
     std::vector<std::vector<double>> translate_matrix();
+    std::vector<std::vector<double>> translate_inverse_matrix();
     std::vector<std::vector<double>> rotate_matrix();
     std::vector<std::vector<double>> camera_matrix();
 };

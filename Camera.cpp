@@ -10,7 +10,7 @@ Camera::Camera(vec3 pos, double w_height, double w_width) {
     fov = M_PI / 4;
     near_plane = 0.1;
     far_plane = 100;
-    moving_speed = 0.02;
+    moving_speed = 5;
     rotation_speed = 0.01;
 }
 
@@ -70,6 +70,19 @@ std::vector<std::vector<double>> Camera::translate_matrix() {
         {1, 0, 0, x},
         {0, 1, 0, y},
         {0, 0, 1, z},
+        {0, 0, 0, 1}
+    };
+    return translation_matrix;
+}
+
+std::vector<std::vector<double>> Camera::translate_inverse_matrix() {
+    double x = position.x;
+    double y = position.y;
+    double z = position.z;
+    std::vector<std::vector<double>> translation_matrix = {
+        {1, 0, 0, -x},
+        {0, 1, 0, -y},
+        {0, 0, 1, -z},
         {0, 0, 0, 1}
     };
     return translation_matrix;

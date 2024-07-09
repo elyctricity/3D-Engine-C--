@@ -10,8 +10,8 @@ int main()
     const double WIDTH = 1280;
     const double HEIGHT = 720;
     sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "3D Engine in C++");
-    // sf::View view(sf::Vector2f(0.f, 0.f), sf::Vector2f(WIDTH, HEIGHT));
-    // window.setView(view);
+    sf::View view(sf::Vector2f(0.f, 0.f), sf::Vector2f(WIDTH, HEIGHT));
+    window.setView(view);
     window.setFramerateLimit(60);
     sf::Clock Clock;
 
@@ -20,8 +20,8 @@ int main()
     Projection* projection = new Projection(camera, HEIGHT, WIDTH);
     Cube* cube = new Cube();
     cube->scale(100);
-    // cube->translate(0.2, 0.4, 0.2);
-    // cube->rotate_y(M_PI / 6);
+    cube->translate(0, 0, 0);
+    cube->rotate_y(0);
 
     while (window.isOpen())
     {
@@ -36,7 +36,6 @@ int main()
 
         window.clear();
         cube->screen_projection(camera, projection, window);
-        cube->vertices_to_projection();
         window.display();
     }
 
